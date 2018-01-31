@@ -1,0 +1,28 @@
+
+一 整体介绍:
+ 
+ 这是一个模仿James先生(http://www.jamesmolloy.co.uk/)的操作系统项目实现的一个简易系统.  整个项目的基础框架
+ 是James提供的, 我做的事就是实现具体的函数, 为写的函数编写基本的测试模块, 然后增加一些觉得有必要的函数或者模块功能. 
+ 感谢James先生提供的makefile, scripts/kernel.ld以及boot/boot.s文件 .
+
+
+ 二 项目流程:
+
+1. 2018年1月27号, 增加common模块, 主要包含3个函数的实现:
+(1) outb():  输出一个字节到端口处
+(2) inb(): 从端口处读入一个字节
+(3) inw(): 从端口处读入一个字
+
+2. 2018年1月31号, 增加console模块, 增加对控制台信息的操作, 具体实现的函数包括:
+(1) void console_clear(): 清屏操作
+(2)void console_putc_color(char c,real_color_t fore,real_color_t back):  输出一个带颜色的字符
+(3) void console_write(char *cstr):  输出一个以'\0'结尾,黑色背景,白色前景色的字符串
+(4) void console_write_color(char *cstr,real_color_t fore,real_color_t back):  输出一个以'\0'结尾,自定义前景色和背景色的字符串
+(5) void console_write_hex(uint32_t n,real_color_t fore,real_color_t back): 以16进制的形式输出一个自定义前景色和背景色的无符号整数,假设该整数是符合条件的整数
+(6) void console_write_dec(uint32_t n,real_color_t fore,real_color_t back):  以10进制形式输出一个自定义前景色和背景色的无符号整数,假设该整数是符合条件的整数
+(7) void console_write_dec_sign(int32_t n,real_color_t fore,real_color_t back):  以10进制形式输出一个自定义前景色和背景色的有符号整数,假设该整数是符合条件的整数
+
+除了这几个对外部可见的函数, 还实现了move_cursor()和scroll()2个帮助函数,用于更新光标位置, 和滚动屏幕. 
+滚动屏幕的实现有参考 清华大学王爽老师 <<汇编语言>> 的设计思想.
+
+ 三 注意事项:
