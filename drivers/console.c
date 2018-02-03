@@ -168,3 +168,36 @@ void console_write_dec_sign(int32_t n,real_color_t fore,real_color_t back)
 	}
 	console_write_dec(n,fore,back);
 }
+
+// 打印一个浮点数f,小数点后保留len位.
+void console_write_float(float f,int len,real_color_t fore,real_color_t back)
+{
+    int i;
+    int i_part;
+
+//    判断正负
+	if(f<0){
+		console_putc_color('-',fore,back);
+		f=-f;
+	}
+
+    // 打印整数部分
+    i_part=(int)f;
+    f=(f-i_part)*10;
+
+    console_write_dec_sign(i_part,fore,back);
+    console_putc_color('.',fore,back);
+
+    // 获取len位长度的小数部分(太天真了,这里f还是需要一位一位的输出,不然超过范围了怎么办)
+    for(i=0;i<len-1;i++){
+        i_part=(int)f;
+        f=(f-i_part)*10;
+        console_write_dec_sign(i_part,fore,back);
+    }
+
+//    判断len+1位小数是否大于等于0.5来决定是否进位
+    i_part=(int)f;
+    if((f-i_part)>=0.5&&i_part<9)		// 这里为了节省内核栈,我就这样简化了,不定义局部变量数组来存放各个元素了, 对于精度要求很高的用户,抱歉啦!!
+        i_part++;
+    console_write_dec_sign(i_part,fore,back);
+}

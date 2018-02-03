@@ -22,7 +22,10 @@
 
 int kernel_entry()
 {
-	console_test();
+	console_clear();
+//	 console_test();
+//	string_test();
+	print_test();
 	return 0;
 }
 

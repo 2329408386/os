@@ -76,6 +76,17 @@ static void test_console_write_dec_sign()
 	console_write_dec_sign(7481481,rc_red,rc_green);
 }
 
+static void test_console_write_float()
+{
+    console_write_float(12.345,1,rc_red,rc_black);
+    console_putc_color('\n',rc_white,rc_black);
+    console_write_float(-12.45,4,rc_red,rc_black);
+    console_putc_color('\n',rc_white,rc_black);
+    console_write_float(-192.434215,4,rc_red,rc_black);
+    console_putc_color('\n',rc_white,rc_black);
+    console_write_float(-192.434259,4,rc_red,rc_black);
+}
+
 void console_test()
 {
 	test_clear();
@@ -84,5 +95,6 @@ void console_test()
 	// test_console_write_color();
 	// test_console_write_hex();
 	// test_console_write_dec();
-	test_console_write_dec_sign();
+//	test_console_write_dec_sign();
+    test_console_write_float();
 }

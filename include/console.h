@@ -49,4 +49,7 @@ void console_write_dec(uint32_t n,real_color_t fore,real_color_t back);
 // 以10进制形式输出一个自定义前景色和背景色的有符号整数,假设该整数是符合条件的整数
 void console_write_dec_sign(int32_t n,real_color_t fore,real_color_t back);
 
+// 打印一个浮点数f,小数点后保留len位.
+void console_write_float(float f,int len,real_color_t fore,real_color_t back);
+
 #endif

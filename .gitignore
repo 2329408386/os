@@ -7,3 +7,7 @@ my_simple_kernel
 
 #软盘文件
 *.img
+
+cmake-build-debug/*
+
+.idea/*
