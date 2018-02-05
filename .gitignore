@@ -11,3 +11,5 @@ my_simple_kernel
 cmake-build-debug/*
 
 .idea/*
+
+*.asm

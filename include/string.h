@@ -28,7 +28,7 @@ int strlen(char* str);
  *比较字符串大小
  *return  0: str1==str2; 1:str1>str2; -1:str1<str2
  */
-int strcmp(char* str1,char* str2);
+int strcmp(const char* str1,const char* str2);
 
 // 复制src字符串的内容到dest字符串
 void strcpy(char* dest,char* src);

@@ -31,4 +31,8 @@
 
 5.  2018年2月3日,修改console模块中打印浮点数的实现,让其可以保留更多有效位.  添加内核打印模块, 用于根据一定规则打印出字符串的内容. 具体接口在(include/print.h)说明, 引用的可变长参数的定义在(include/vargs.h)说明, 具体实现在(libs/print.c)文件.
 
+6. 2018年2月5日,引用grub规范中的multiboot模块和elf(excutable linked formater)模块,用于记录grub在启动内核时记录的内核的相关信息. 定义见(include/multiboot.h,include/elf.h),实现见(libs/elf.c)
+
+7. 2018年2月5日,增加debug模块及相应的调试函数. 定义见(include/debug.h),实现见(libs/debug.c).
+
  三 注意事项:

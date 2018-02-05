@@ -54,7 +54,7 @@ int strlen(char* str){
 
 
 //比较字符串大小
-int strcmp(char* str1,char* str2)
+int strcmp(const char* str1,const char* str2)
 {	
 	int pos=0;
 	while(str1[pos]!=0&&str2[pos]!=0)

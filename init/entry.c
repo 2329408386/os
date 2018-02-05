@@ -25,7 +25,8 @@ int kernel_entry()
 	console_clear();
 //	 console_test();
 //	string_test();
-	print_test();
+//	print_test();
+    debug_test();
 	return 0;
 }
 

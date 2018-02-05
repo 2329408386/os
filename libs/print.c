@@ -30,13 +30,9 @@ static void print_blank(int len){
         console_putc_color(' ',rc_white,rc_black);
 }
 
-// 根据给出的字符串的格式和可变参数列表以及颜色,打印带颜色的字符串
-void printk_color(real_color_t fore,real_color_t back,char* format,...)
+// 内核级的屏幕打印函数,一般不提供外部调用
+void printk_color(real_color_t fore,real_color_t back,char* format,va_list list)
 {
-    // 初始化可变长参数的文字
-    va_list list;
-    va_start(list,format);
-
     // 记录当前的输出位置
     int i=0;
 
@@ -115,5 +111,21 @@ void printk_color(real_color_t fore,real_color_t back,char* format,...)
         }
     }
 
-    charEnd:va_end(list);
+    charEnd:;
+}
+
+// 根据给出的字符串的格式和可变参数列表以及颜色,打印带颜色的字符串
+void print_color(real_color_t fore,real_color_t back,char* format,...){
+    va_list list;
+    va_start(list,format);
+    printk_color(fore,back,format,list);
+    va_end(list);
+}
+
+// 根据给出的字符串的格式和可变参数列表,打印白字黑底的字符串
+void print(char* format,...){
+    va_list list;
+    va_start(list,format);
+    printk_color(rc_white,rc_black,format,list);
+    va_end(list);
 }

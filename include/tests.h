@@ -14,4 +14,7 @@ void string_test();
 // 对于内核打印函数的测试
 void print_test();
 
+// 对debug模块的测试
+void debug_test();
+
 #endif

@@ -91,7 +91,7 @@ void console_putc_color(char c,real_color_t fore,real_color_t back)
 	}
 	else if(c=='\r'){x_cursor=0;}
 	else if(c=='\t'){x_cursor+=4;}
-	else{
+	else if(c>=' '){	//根据ascii表,也只有大于等于32的ascii码对应的字符才有意思.
 		vedio_memory[y_cursor*80+x_cursor]=element;
 		x_cursor++;
 	}
