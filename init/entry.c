@@ -19,14 +19,24 @@
 #include "types.h"
 #include "console.h"
 #include "tests.h"
+#include "debug.h"
+#include "gdt.h"
+#include "idt.h"
+#include "timer.h"
+#include "keyboard.h"
 
 int kernel_entry()
-{
+{	
 	console_clear();
-//	 console_test();
-//	string_test();
-//	print_test();
-    debug_test();
+
+  	init_debug();
+   	init_gdt();
+   	init_idt();
+//  init_timer(20);
+//	init_keyboard();
+//	asm("int $33");
+//	keyboard_test();
+	pmm_test();
 	return 0;
 }
 

@@ -67,14 +67,6 @@ int strcmp(const char* str1,const char* str2)
 			pos++;
 	}
 	
-	// console_write_dec(pos,rc_blue,rc_black);console_write("  ");
-	// console_write_dec(str1[pos],rc_blue,rc_black);console_write("  ");
-	// console_write_dec(str2[pos],rc_blue,rc_black);console_write("  ");;
-
-	// 判断2个字符串到达尾部的情况.
-	// if(str1[pos]==0&&str2[pos]==0) return 0;
-	// if(str1[pos]==0) return -1;
-	// if(str2[pos]==0) return 1;
 
 	// 我觉得这种判断更好一点, 因为只要到达末尾了, 就是0, 那就是ascii码里面最小的
 	if(str1[pos]==str2[pos])

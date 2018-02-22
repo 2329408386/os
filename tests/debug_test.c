@@ -21,6 +21,6 @@ static void panic_test()
 // 对debug模块的测试
 void debug_test(){
     init_debug();
-//    print_cur_status_test();
+    print_cur_status_test();
     panic_test();
 }

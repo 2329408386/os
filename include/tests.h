@@ -17,4 +17,19 @@ void print_test();
 // 对debug模块的测试
 void debug_test();
 
+// 对gdt模块的测试.
+void gdt_test();
+
+// 对idt模块的测试
+void idt_test();
+
+// 对timer模块的测试
+void timer_test();
+
+// 对keyboard模块的测试
+void keyboard_test();
+
+// 对物理内存管理模块的测试
+void pmm_test();
+
 #endif
