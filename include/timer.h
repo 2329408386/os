@@ -17,4 +17,7 @@ void timer_call(regs* registers);
 // 初始化时钟中断函数
 void init_timer(uint32_t frequency);
 
+// 获取当前虚拟时间
+uint32_t get_vitual_timer();
+
 #endif //OS_TIMER_H

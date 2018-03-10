@@ -7,6 +7,7 @@
 #include "pmm.h"
 #include "types.h"
 #include "print.h"
+#include "vmm.h"
 
 // 存放物理内存栈
 static uint32_t pmm_stack[PAGE_MAX_SIZE+1];
@@ -22,7 +23,7 @@ void show_pmm_address(){
     uint32_t address=glb_mboot_ptr->mmap_addr;      // 物理段的起始地址
     uint32_t len=glb_mboot_ptr->mmap_length/ sizeof(mmap_entry_t);        // 物理段的数量
 
-    mmap_entry_t* entry=(mmap_entry_t*)address;
+    mmap_entry_t* entry=(mmap_entry_t*)(address+PAGE_OFFSET);
     int i=0;
     for(;i<len;i++){
         print("base: 0x#x\thigh: 0x#x\tsize: 0x#xbytes\ttype: 0x#x\n",entry[i].base_addr_low,entry[i].length_low+entry[i].base_addr_low,entry[i].length_low,entry[i].type);
@@ -44,7 +45,7 @@ void init_pmm(){
     	uint32_t len=glb_mboot_ptr->mmap_length/ sizeof(mmap_entry_t);        // 物理段的数量
 
     	// 获取物理段的起始地址.
-    	mmap_entry_t* entry=(mmap_entry_t*)address;
+    	mmap_entry_t* entry=(mmap_entry_t*)(address+PAGE_OFFSET);
     	int i=0;
     	for(;i<len;i++){
     		// 找到可用段的起始地址.
@@ -83,4 +84,42 @@ void pmm_free_page(uint32_t page){
 		return ;
 	}
 	pmm_stack[++pmm_stack_top]=page;	// 把当前栈指向的地址空间释放
+}
+
+// 页错误处理函数
+void page_fault(regs* regs){
+
+    // 当发生页错误时,程序想要获得的地址将会存放到CR2寄存器中.
+    uint32_t cr2;
+    asm volatile ("mov %%cr2, %0" : "=r" (cr2));
+
+    print("Page fault at 0x#x, virtual faulting address 0x#x\n", regs->eip, cr2);
+    print("Error code: #x\n", regs->error_code);
+
+    // bit 0 为 0 指页面不存在内存里
+    if ( !(regs->error_code & 0x1)) {
+        print_color(rc_red,rc_black, "Because the page wasn't present.\n");
+    }
+    // bit 1 为 0 表示读错误，为 1 为写错误
+    if (regs->error_code & 0x2) {
+        print_color(rc_red,rc_black, "Write error.\n");
+    } else {
+        print_color(rc_red,rc_black, "Read error.\n");
+    }
+    // bit 2 为 1 表示在用户模式打断的，为 0 是在内核模式打断的
+    if (regs->error_code & 0x4) {
+        print_color(rc_red,rc_black, "In user mode.\n");
+    } else {
+        print_color(rc_red,rc_black, "In kernel mode.\n");
+    }
+    // bit 3 为 1 表示错误是由保留位覆盖造成的
+    if (regs->error_code & 0x8) {
+        print_color(rc_red,rc_black, "Reserved bits being overwritten.\n");
+    }
+    // bit 4 为 1 表示错误发生在取指令的时候
+    if (regs->error_code & 0x10) {
+        print_color(rc_red,rc_black, "The fault occurred during an instruction fetch.\n");
+    }
+
+    while (1);
 }

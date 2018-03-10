@@ -1,12 +1,18 @@
 
 一 整体介绍:
  
- 这是一个模仿James先生(http://www.jamesmolloy.co.uk)的操作系统项目实现的一个简易系统.  整个项目的基础框架
- 是James提供的, 我做的事就是实现具体的函数, 为写的函数编写基本的测试模块, 然后增加一些觉得有必要的函数或者模块功能. 
- 感谢James先生提供的makefile, scripts/kernel.ld以及boot/boot.s文件 .
+ 	出于练习目的, 2018 年寒假期间, 实现一个以 c 语言为主, 以 grub 作为 bootloader 的
+mini 操作系统.
+	目前通过测试的主要功能有: 控制台操作, 内核调试, gdt 表, idt 表, 内存管理, 用户操作.
+	对于用户, 可以输入指令来执行系统内嵌的命令, 当发生错误时, 会打印错误信息
 
+ 二 使用说明:
+ 	我只在虚拟机上测试使用过该操作系统. 过程:
+ 		1. 按照qemu虚拟机
+ 		2. 在根目录下建立/mnt/kernel文件
+ 		3. 进入os文件夹, 键入 make qemu命令就好了.
 
- 二 项目流程:
+ 三 项目流程:
 
 1. 2018年1月27号, 增加common模块, 主要包含3个函数的实现:
 (1) outb():  输出一个字节到端口处
@@ -41,12 +47,28 @@
 
 10. 2018年2月16日,增加键盘输入(keyboard)模块,具体实现见(drives/keyboard.c).
 
-11. 添加物理内存管理模块, 具体实现见(libs/pmm.c)(Physical MeMory).
+11. 2018年2月25日,添加物理内存管理模块, 具体实现见(libs/pmm.c)(Physical MeMory).
 
-三 注意事项:
+12. 2018年3月2日, 参见hurley代码, 实现对虚拟内存的管理(libs/vmm.c). 注册页错处中断(pmm.c->page_fault()).
+
+13. 2018年3月6日, 以hurley同学的heap框架为基础, 实现内核堆模块(libs/heap.c).
+
+14. 2018年3月8日, 完成内核线程调度模块(libs/sched.c).
+
+15. 2018年3月10日, 添加用户模块,具体见(user文件夹).
+
+16. 2018年3月10日, 啊啊啊, 不敢相信呢, 我居然把操作系统的基本部分完成了, 有交互功能了, 好高兴的样子!!!!
+
+四 注意事项:
 
 1. 对所有直接引用的代码, 都有注释出处, 如有侵权,请联系我(lcp2329408386@gmail.com), 我会将引用的部分全部删除.
 
 2. 出于学习目的的同学, 可以直接使用任何部分的代码,注明出处就好了.
 
 3. 非常感谢大家提出的意见.
+
+五 代码引用:
+
+1 James先生(http://www.jamesmolloy.co.uk/tutorial_html/): /Makefile,/boot/boot.s
+2 hurley: /libs/vmm.c, /srcipts/kernel.ld, heap.c
+3 另外, /include/elf.h和/include/multiboot.h文件来源于grub规范

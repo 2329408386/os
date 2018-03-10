@@ -5,9 +5,10 @@
 #include "console.h"
 #include "common.h"
 #include "types.h"
+#include "vmm.h"
 
 // VGA(vedio graphics array)的起始地址
-static  uint16_t* vedio_memory=(uint16_t*)0xb8000;
+static  uint16_t* vedio_memory=(uint16_t*)(0xb8000+PAGE_OFFSET);
 
 // 光标的x,y坐标
 static uint8_t x_cursor=0;

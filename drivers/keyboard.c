@@ -9,6 +9,7 @@
 #include "print.h"
 #include "common.h"
 #include "idt.h"
+#include "heap.h"
 
 // 扫描码-ascii码对应表, 索引是扫描码, 值是ascii码
 static unsigned char keymaps[128] =
@@ -82,7 +83,7 @@ void keyboard_call(regs* registers){
         is_finished=0;
         buff[pos]=0;
         pos=0;
-        return;
+        goto end;
     }
 
     if(scanCode==0x3a)     // 大写锁定键
@@ -140,9 +141,11 @@ void init_keyboard(){
 
 // 输入一个字符串
 char* scanf(){
+    char* toReturn=(char*)kmalloc(1024);        // 如果不想让它返回相同的地址空间,请重新为它分配内存, 不debug想都想不到这里会出错.
     init_keyboard();
     is_finished=1;
     while(is_finished)
         ;
-    return buff;
+    strcpy(toReturn,buff);
+    return toReturn;
 }

@@ -22,36 +22,50 @@
  *      Linux GCC also adds in an extra data section: .rodata. 
  *      This is for read-only initialised data, such as constants. 
  *      For simplicity we simply bundle this in with the .data section.
+
+ *   对于虚拟内存管理部分, 刚进入时,grub是从0x100000处寻址, 而我们需要把地址映射到3g到4g的空间,这就要求我们
+ *   把初始化地址和内核的其它地址分别管理.
  */
 
 ENTRY(start)
 SECTIONS
 {
+	PROVIDE( kern_start = 0xC0100000);
 	. = 0x100000;
+	.init.text :
+	{
+		*(.init.text)
+		. = ALIGN(4096);
+	}
+	.init.data :
+	{
+		*(.init.data)
+		. = ALIGN(4096);
+	}
 
-	PROVIDE( kern_start = . );
-	.text :
+	. += 0xC0000000;
+	.text : AT(ADDR(.text) - 0xC0000000)
 	{
 		*(.text)
 		. = ALIGN(4096);
 	}
-	.data :
+	.data : AT(ADDR(.data) - 0xC0000000)
 	{
 		*(.data)
 		*(.rodata)
 		. = ALIGN(4096);
 	}
-	.bss :
+	.bss : AT(ADDR(.bss) - 0xC0000000)
 	{
 		*(.bss)
 		. = ALIGN(4096);
 	}
-	.stab :
+	.stab : AT(ADDR(.stab) - 0xC0000000)
 	{
 		*(.stab)
 		. = ALIGN(4096);
 	}
-	.stabstr :
+	.stabstr : AT(ADDR(.stabstr) - 0xC0000000)
 	{
 		*(.stabstr)
 	 	. = ALIGN(4096);
@@ -60,5 +74,6 @@ SECTIONS
 
 	/DISCARD/ : { *(.comment) *(.eh_frame) }
 }
+
 
 

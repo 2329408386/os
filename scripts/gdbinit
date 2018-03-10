@@ -1,4 +1,4 @@
-file my_simple_kernel
+file happyOS
 target remote :1234
 break kernel_entry
 c

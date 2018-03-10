@@ -10,6 +10,7 @@
 #include "multiboot.h"
 #include "print.h"
 #include "types.h"
+#include "idt.h"
 
 // 定义栈的大小
 #define STACK_SIZE 8192
@@ -47,5 +48,8 @@ uint32_t pmm_alloc_page();
 
 // 释放一个申请的内存
 void pmm_free_page(uint32_t page);
+
+// 页错误处理函数
+void page_fault(regs* regs1);
 
 #endif //OS_PMM_H

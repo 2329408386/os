@@ -4,15 +4,19 @@
  *描述: 对时钟中断的一些定义
 */
 
+#include "types.h"
 #include "timer.h"
 #include "console.h"
 #include "idt.h"
 #include "common.h"
+#include "sched.h"
+
+static uint32_t vitual_timer=10000000;
 
 // 处理时钟中断的回调函数
 void timer_call(regs* registers){
-    static int tick=0;
-    print("Now is:#d\n",tick++);
+    schedule();
+    vitual_timer++;
 }
 
 // 初始化时钟中断函数
@@ -20,7 +24,7 @@ void init_timer(uint32_t frequency){
     // 注册时钟中断函数.
     register_interrupt_handler(IRQ0,timer_call);
 
-    asm volatile("sti");    //打开中断
+    // asm volatile("sti");    //打开中断
 
     // Intel 8253/8254 PIT芯片 I/O端口地址范围是40h~43h
     // 输入频率为 1193180，frequency 即每秒中断次数
@@ -39,4 +43,9 @@ void init_timer(uint32_t frequency){
     // 分别写入低字节和高字节
     outb(0x40, low);
     outb(0x40, high);
+}
+
+// 获取当前虚拟时间
+uint32_t get_vitual_timer(){
+    return vitual_timer;
 }

@@ -35,16 +35,16 @@ all: $(S_OBJECTS) $(C_OBJECTS) link update_image
 
 link:
 	@echo 链接内核文件...
-	$(LD) $(LD_FLAGS) $(S_OBJECTS) $(C_OBJECTS) -o my_simple_kernel
+	$(LD) $(LD_FLAGS) $(S_OBJECTS) $(C_OBJECTS) -o happyOS
 
 .PHONY:clean
 clean:
-	$(RM) $(S_OBJECTS) $(C_OBJECTS) my_simple_kernel
+	$(RM) $(S_OBJECTS) $(C_OBJECTS) happyOS
 
 .PHONY:update_image
 update_image:
 	sudo mount floppy.img /mnt/kernel
-	sudo cp my_simple_kernel /mnt/kernel/my_simple_kernel
+	sudo cp happyOS /mnt/kernel/happyOS
 	# sleep 1
 	sudo umount /mnt/kernel
 
@@ -59,10 +59,6 @@ umount_image:
 .PHONY:qemu
 qemu:
 	qemu -fda floppy.img -boot a
-
-.PHONY:bochs
-bochs:
-	bochs -f scripts/bochsrc.txt
 
 .PHONY:debug
 debug:

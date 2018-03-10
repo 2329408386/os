@@ -29,7 +29,7 @@ void print_cur_status()
     // 提取出cs,ds,es和ss的内容(memory)
     asm volatile("mov %%cs,%0;mov %%ds,%1;mov %%es,%2;mov %%ss,%3":"=m"(cs),"=m"(ds),"=m"(es),"=m"(ss));
 
-    print("Current Level:#d @ring #d\ncs=#d\nds=#d\nes=#d\nss=#d\n",level,cs&0x3,cs,ds,es,ss);
+    print("\nCurrent Level:#d @ring #d\ncs=#d\nds=#d\nes=#d\nss=#d\n",level,cs&0x3,cs,ds,es,ss);
     level++;
 }
 

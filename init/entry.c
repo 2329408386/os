@@ -1,42 +1,34 @@
 /*
- * =====================================================================================
- *
- *       Filename:  entry.c
- *
- *    Description:  hurlex 内核的入口函数
- *
- *        Version:  1.0
- *        Created:  2013年10月31日 13时31分03秒
- *       Revision:  none
- *       Compiler:  gcc
- *
- *         Author:  Hurley (LiuHuan), liuhuan1992@gmail.com
- *        Company:  Class 1107 of Computer Science and Technology
- *
- * =====================================================================================
+ * 入口函数初始化操作: 引用hurley的初始页
  */
 
-#include "types.h"
-#include "console.h"
+#include "init.h"
+#include "login.h"
 #include "tests.h"
-#include "debug.h"
-#include "gdt.h"
-#include "idt.h"
-#include "timer.h"
-#include "keyboard.h"
+#include "command.h"
+#include "print.h"
+#include "string.h"
 
-int kernel_entry()
-{	
-	console_clear();
+void kern_init()
+{
+	init();
+	again:welcome();
+	login();
 
-  	init_debug();
-   	init_gdt();
-   	init_idt();
-//  init_timer(20);
-//	init_keyboard();
-//	asm("int $33");
-//	keyboard_test();
-	pmm_test();
-	return 0;
+	while(1){
+		print("\nhappyOS: ");
+		char* command=scanf();
+		if(strcmp(command,"exit")==0)
+			goto again;
+		choose(command);
+	}
+
+	asm volatile("sti");    //打开中断
+	
+
+    // 宕机等待.
+    while(1){
+        asm volatile("hlt");
+    }
 }
 

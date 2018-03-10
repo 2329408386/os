@@ -32,4 +32,13 @@ void keyboard_test();
 // 对物理内存管理模块的测试
 void pmm_test();
 
+// 对内核堆的测试
+void heap_test();
+
+// 对内核线程切换的测试
+void sched_test();
+
+// 对用户操作的测试
+void user_test();
+
 #endif
