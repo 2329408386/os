@@ -5,9 +5,6 @@ my_simple_kernel
 #所有中间过程文件
 *.o
 
-#软盘文件
-*.img
-
 cmake-build-debug/*
 
 .idea/*
