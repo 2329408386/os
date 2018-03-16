@@ -9,8 +9,10 @@ mini 操作系统.
  二 使用说明:
  	我只在虚拟机上测试使用过该操作系统. 过程:
  		1. 安装qemu虚拟机
- 		2. 在根目录下建立/mnt/kernel文件
- 		3. 进入os文件夹, 键入 make qemu命令就好了.
+		2. 根据自己的cpu情况建立一个qemu虚拟机的链接,比如我的是i386的,
+		   那么是命令是(sudo ln -s /usr/bin/qemu-system-i386 /usr/bin/qemu)
+ 		3. 在根目录下建立/mnt/kernel文件
+ 		4. 进入os文件夹, 键入 make qemu命令就好了.
 
  三 项目流程:
 
